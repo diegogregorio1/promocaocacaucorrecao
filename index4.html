@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Promoção Cacau Show</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --choco: #5d3a00;
+      --gold: #c8a165;
+      --white: #ffffff;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background-color: #fff8f0;
+      color: var(--choco);
+    }
+    header {
+      background: var(--white);
+      padding: 1rem;
+      text-align: center;
+      border-bottom: 2px solid var(--gold);
+    }
+    header img {
+      height: 50px;
+    }
+    footer {
+      margin-top: 2rem;
+      padding: 1rem;
+      background: var(--choco);
+      font-size: 0.875rem;
+      color: #fff;
+      border-top: 1px solid #ccc;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      padding: 2rem 1rem;
+    }
+    h1, h2 {
+      color: var(--choco);
+      margin-bottom: 1rem;
+    }
+    .question, .product, .form-group, .shipping-option {
+      margin-bottom: 1.5rem;
+    }
+    .question label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    .product img {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #ccc;
+      margin-bottom: 0.5rem;
+    }
+    .button {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--white);
+      padding: 0.75rem 1.5rem;
+      text-align: center;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    select, input {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      font-size: 1rem;
+    }
+    select:focus, input:focus {
+      outline: 2px solid var(--gold);
+    }
+    .products-grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+    .product {
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      padding: 1rem;
+      background-color: #fff;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.3s;
+    }
+    .product.selected {
+      border-color: var(--gold);
+      background-color: #fff5e6;
+    }
+    .product p {
+      margin: 0.25rem 0;
+    }
+    .price-original {
+      text-decoration: line-through;
+      color: #999;
+    }
+    .price-final {
+      color: green;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="https://www.cacaushow.com.br/on/demandware.static/-/Sites-CacauShowStorefront/default/dw4ffb1424/images/logo.svg" alt="Cacau Show Logo" />
+  </header>
+  <main class="container">
+ 
+
+  <section id="etapa-pesquisa">
+  <h1>🎉 Ganhe Chocolate Grátis da Cacau Show!</h1>
+  <p>🍫 Responda nossa pesquisa rápida e receba um delicioso chocolate na sua casa!</p>
+  
+  <!-- Adicionei class="resposta" e value="" nos selects -->
+  <div class="question">
+    <label><strong>Com que frequência você consome chocolate?</strong></label>
+    <select class="resposta">
+      <option value="" disabled selected>Selecione uma opção</option>
+      <option value="Diariamente">Diariamente</option>
+      <option value="Semanalmente">Semanalmente</option>
+      <option value="Mensalmente">Mensalmente</option>
+      <option value="Raramente">Raramente</option>
+    </select>
+  </div>
+  
+  <div class="question">
+    <label><strong>Qual seu tipo de chocolate preferido?</strong></label>
+    <select class="resposta">
+      <option value="" disabled selected>Selecione uma opção</option>
+      <option value="Ao Leite">Ao Leite</option>
+      <option value="Meio Amargo">Meio Amargo</option>
+      <option value="Branco">Branco</option>
+      <option value="Recheado">Recheado</option>
+    </select>
+  </div>
+  
+  <div class="question">
+    <label><strong>Você já comprou produtos da Cacau Show antes?</strong></label>
+    <select class="resposta">
+      <option value="" disabled selected>Selecione uma opção</option>
+      <option value="Sim">Sim</option>
+      <option value="Não">Não</option>
+    </select>
+  </div>
+  
+  <div class="question">
+    <label><strong>Em quais ocasiões você costuma consumir mais chocolate?</strong></label>
+    <select class="resposta">
+      <option value="" disabled selected>Selecione uma opção</option>
+      <option value="Páscoa">Páscoa</option>
+      <option value="Datas comemorativas">Datas comemorativas</option>
+      <option value="Todos os dias">Todos os dias</option>
+      <option value="Presenteando">Presenteando</option>
+    </select>
+  </div>
+
+  <!-- Botão modificado com id e disabled -->
+  <button id="botaoAvancar" class="button" disabled onclick="irParaEtapa('escolha')">👉 Avançar</button>
+</section>
+
+<script>
+// Adicione este JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+  const selects = document.querySelectorAll('.resposta');
+  const botao = document.getElementById('botaoAvancar');
+
+  function verificarCampos() {
+    const todosPreenchidos = [...selects].every(select => select.value !== '');
+    botao.disabled = !todosPreenchidos;
+  }
+
+  selects.forEach(select => {
+    select.addEventListener('change', verificarCampos);
+  });
+});
+</script>
+
+    </section>
+
+    <!-- Etapa 2: Escolha do Chocolate -->
+    <section id="etapa-escolha" style="display:none">
+      <h2>Escolha o seu chocolate</h2>
+      <div class="products-grid">
+        <!-- Produto 1 -->
+        <div class="product" onclick="selecionarProduto(this)">
+          <img src="https://www.cacaushow.com.br/on/demandware.static/-/Sites-masterCatalog_CacauShow/default/dwe40064b2/large/1003499_5.png" alt="Ovo de Páscoa do Chef Pistache 600g" />
+          <p><strong>Ovo de Páscoa do Chef Pistache 600g</strong></p>
+          <p class="price-original">R$ 199,99</p>
+          <p class="price-final">R$ 0,00</p>
+        </div>
+        <!-- Produto 2 -->
+        <div class="product" onclick="selecionarProduto(this)">
+          <img src="https://www.cacaushow.com.br/on/demandware.static/-/Sites-masterCatalog_CacauShow/default/dw3d64ae6a/large/1001797_1.png" alt="Ovo de Páscoa Clássicos ao Leite com Bombons 2kg" />
+          <p><strong>Ovo de Páscoa Clássicos ao Leite com Bombons 2kg</strong></p>
+          <p class="price-original">R$ 399,99</p>
+          <p class="price-final">R$ 0,00</p>
+        </div>
+        <!-- Produto 3 -->
+        <div class="product" onclick="selecionarProduto(this)">
+          <img src="https://www.cacaushow.com.br/on/demandware.static/-/Sites-masterCatalog_CacauShow/default/dwf6f99fae/large/1003498_1.png" alt="Ovo de Páscoa do Chef Nuts Recheado 600g" />
+          <p><strong>Ovo de Páscoa do Chef Nuts Recheado 600g</strong></p>
+          <p class="price-original">R$ 174,99</p>
+          <p class="price-final">R$ 0,00</p>
+        </div>
+        <!-- Produto 4 -->
+        <div class="product" onclick="selecionarProduto(this)">
+          <img src="https://www.cacaushow.com.br/on/demandware.static/-/Sites-masterCatalog_CacauShow/default/dw795e26c0/large/1003539_5.png" alt="Ovo de Páscoa ao Leite Pantufa Ursinhos Carinhosos Ursinha Carinhosa G 170g" />
+          <p><strong>Ovo de Páscoa ao Leite Pantufa Ursinhos Carinhosos Ursinha Carinhosa G 170g</strong></p>
+          <p class="price-original">R$ 118,89</p>
+          <p class="price-final">R$ 0,00</p>
+
+        </div>
+      </div>
+
+      <div id="campo-cep" style="display:none">
+        <label for="cep"><strong>Digite seu CEP:</strong></label>
+        <input type="text" id="cep" placeholder="Digite o CEP" onblur="buscarCEP()">
+        
+        <div id="endereco" style="display:none">
+          <label for="rua"><strong>Rua:</strong></label>
+          <input type="text" id="rua" disabled>
+          
+          <label for="bairro"><strong>Bairro:</strong></label>
+          <input type="text" id="bairro" disabled>
+          
+          <label for="cidade"><strong>Cidade:</strong></label>
+          <input type="text" id="cidade" disabled>
+          
+          <label for="estado"><strong>Estado:</strong></label>
+          <input type="text" id="estado" disabled>
+        </div>
+      </div>
+
+      <button class="button" id="btn-avancar" onclick="irParaEtapa('dados')" disabled>👉 Avançar para Dados</button>
+    </section>
+
+<!-- Etapa 3: Preencha os dados -->
+   <section id="etapa-dados" style="display:none">
+  <h2>📝 Complete suas informações para enviarmos seu chocolate!</h2>
+  
+  <div class="form-group">
+    <label for="nome"><strong>Nome completo:</strong></label>
+    <input type="text" id="nome" required class="campo-obrigatorio">
+  </div>
+  
+  <div class="form-group">
+    <label for="email"><strong>E-mail:</strong></label>
+    <input type="email" id="email" required class="campo-obrigatorio">
+  </div>
+  
+  <div class="form-group">
+    <label for="cpf"><strong>CPF:</strong></label>
+    <input type="text" id="cpf" required class="campo-obrigatorio" maxlength="14">
+  </div>
+  
+  <div class="form-group">
+    <label for="numero"><strong>Número do endereço:</strong></label>
+    <input type="text" id="numero" required class="campo-obrigatorio">
+  </div>
+  
+  <div class="form-group">
+    <label for="complemento">
+      <strong>Complemento:</strong>
+      <span class="tooltip">(Opcional)
+        <span class="tooltiptext">Apartamento, bloco, referência, etc.</span>
+      </span>
+    </label>
+    <input type="text" id="complemento">
+  </div>
+
+  <button id="botaoAvancarDados" class="button" disabled onclick="enviarDados()">👉 Avançar para Escolher Envio</button>
+</section>
+
+<style>
+/* Estilos Gerais */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.campo-obrigatorio {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+/* Validação Visual */
+.campo-obrigatorio:invalid:not(:focus) {
+  border-color: #ff4444;
+  background-color: #fff3f3;
+}
+
+.campo-obrigatorio:valid {
+  border-color: #00c853;
+  background-color: #f3fff5;
+}
+
+.campo-invalido {
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(8px); }
+  75% { transform: translateX(-8px); }
+}
+
+/* Tooltip */
+.tooltip {
+  cursor: help;
+  position: relative;
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.tooltiptext {
+  visibility: hidden;
+  width: 180px;
+  background: #2c3e50;
+  color: #fff;
+  text-align: center;
+  border-radius: 4px;
+  padding: 8px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 0.9em;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Botão */
+.button {
+  background: #e67e22;
+  color: white;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: #95a5a6;
+}
+
+.button.loading {
+  padding-right: 45px;
+}
+
+.loading-spinner {
+  display: none;
+  margin-left: 10px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Configurações iniciais
+  const camposObrigatorios = document.querySelectorAll('.campo-obrigatorio');
+  const botaoAvancar = document.getElementById('botaoAvancarDados');
+  const cpfField = document.getElementById('cpf');
+
+  // Máscara CPF
+  cpfField.addEventListener('input', function(e) {
+    let value = e.target.value.replace(/\D/g, '');
+    value = value.replace(/(\d{3})(\d)/, '$1.$2')
+                .replace(/(\d{3})(\d)/, '$1.$2')
+                .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    e.target.value = value;
+  });
+
+  // Validação em Tempo Real
+  function validarCampos() {
+    const todosValidos = [...camposObrigatorios].every(campo => {
+      if (campo.id === 'cpf' && campo.value.trim() !== '') {
+        return validarCPF(campo.value);
+      }
+      return campo.checkValidity();
+    });
+    
+    botaoAvancar.disabled = !todosValidos;
+  }
+
+  // Validador CPF
+  function validarCPF(cpf) {
+    cpf = cpf.replace(/[^\d]+/g,'');
+    if(cpf.length !== 11 || /^(.)\1+$/.test(cpf)) return false;
+    
+    let soma = 0;
+    for(let i = 0; i < 9; i++) soma += parseInt(cpf.charAt(i)) * (10 - i);
+    let resto = (soma * 10) % 11;
+    if(resto === 10 || resto === 11) resto = 0;
+    if(resto !== parseInt(cpf.charAt(9))) return false;
+
+    soma = 0;
+    for(let i = 0; i < 10; i++) soma += parseInt(cpf.charAt(i)) * (11 - i);
+    resto = (soma * 10) % 11;
+    return (resto === 10 || resto === 11 ? 0 : resto) === parseInt(cpf.charAt(10));
+  }
+
+  // Event Listeners
+  camposObrigatorios.forEach(campo => {
+    campo.addEventListener('input', validarCampos);
+    campo.addEventListener('blur', function() {
+      if(this.id === 'cpf' && this.value.trim() !== '' && !validarCPF(this.value)) {
+        this.classList.add('campo-invalido');
+        setTimeout(() => this.classList.remove('campo-invalido'), 1000);
+      }
+    });
+  });
+
+  // Prevenção de Duplo Envio
+  window.enviarDados = function() {
+    if(!botaoAvancar.disabled) {
+      botaoAvancar.disabled = true;
+      botaoAvancar.innerHTML = 'Enviando... <div class="loading-spinner">⏳</div>';
+      
+      // Simulação de envio (substituir por lógica real)
+      setTimeout(() => {
+        alert('Dados enviados com sucesso!');
+        irParaEtapa('envio');
+        botaoAvancar.disabled = false;
+        botaoAvancar.innerHTML = '👉 Avançar para Escolher Envio';
+      }, 2000);
+    }
+  };
+});
+</script>
+
+<!-- Etapa 4: Seleção do Frete -->
+   <section id="etapa-envio" style="display:none">
+  <div class="envio-header">
+    <h2>🚚 Escolha como quer receber seu presente!</h2>
+    <p class="envio-disclaimer">O produto é gratuito, sendo cobrado apenas o valor referente ao envio, pago exclusivamente via PIX.</p>
+  </div>
+
+  <div class="envio-options">
+    <!-- Opção PAC -->
+    <div class="envio-card">
+      <input type="radio" name="envio" value="pac" id="pac" class="envio-radio" required>
+      <label for="pac" class="envio-label">
+        <div class="envio-icon">📦</div>
+        <div class="envio-content">
+          <h3>PAC Econômico</h3>
+          <div class="envio-detalhes">
+            <p class="envio-prazo">Entrega em 3-7 dias úteis</p>
+            <p class="envio-info">• Rastreamento básico<br>• Entrega em endereço residencial</p>
+          </div>
+          <div class="envio-preco">R$ 18,00</div>
+        </div>
+      </label>
+    </div>
+
+    <!-- Opção SEDEX -->
+    <div class="envio-card">
+      <input type="radio" name="envio" value="sedex" id="sedex" class="envio-radio" required>
+      <label for="sedex" class="envio-label">
+        <div class="envio-icon">🚀</div>
+        <div class="envio-content">
+          <h3>SEDEX Expresso</h3>
+          <div class="envio-detalhes">
+            <p class="envio-prazo">Entrega em 1-2 dias úteis</p>
+            <p class="envio-info">• Rastreamento premium<br>• Entrega prioritária</p>
+          </div>
+          <div class="envio-preco">R$ 29,99</div>
+        </div>
+      </label>
+    </div>
+  </div>
+
+  <button id="btn-avancar-envio" class="button" disabled onclick="processarEnvio()">
+    👉 Avançar para Pagamento
+    <span class="loading-spinner"></span>
+  </button>
+</section>
+
+<style>
+/* Estilos Gerais */
+.envio-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.envio-disclaimer {
+  color: #666;
+  margin: 1rem auto;
+  max-width: 600px;
+}
+
+.envio-options {
+  display: grid;
+  gap: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.envio-card {
+  border: 2px solid #eee;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.envio-label {
+  display: flex;
+  gap: 1.5rem;
+  cursor: pointer;
+  align-items: flex-start;
+}
+
+.envio-radio {
+  position: absolute;
+  opacity: 0;
+}
+
+.envio-icon {
+  font-size: 2.5rem;
+  margin-right: 1rem;
+}
+
+.envio-content {
+  flex-grow: 1;
+}
+
+.envio-content h3 {
+  margin: 0 0 0.5rem 0;
+  color: #2c3e50;
+}
+
+.envio-prazo {
+  color: #e67e22;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.envio-info {
+  color: #666;
+  margin: 0.5rem 0;
+  line-height: 1.6;
+}
+
+.envio-preco {
+  background: #f8f9fa;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: bold;
+  color: #27ae60;
+  margin-top: 1rem;
+  display: inline-block;
+}
+
+/* Estados Interativos */
+.envio-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.envio-radio:checked + .envio-label .envio-card {
+  border-color: #e67e22;
+}
+
+.envio-radio:checked ~ .envio-content {
+  background: #fffaf5;
+}
+
+.envio-radio:focus-visible + .envio-label {
+  outline: 2px solid #e67e22;
+}
+
+/* Botão */
+#btn-avancar-envio {
+  margin: 2rem auto 0;
+  display: block;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+#btn-avancar-envio:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+#btn-avancar-envio:not(:disabled):hover {
+  transform: scale(1.02);
+  box-shadow: 0 3px 10px rgba(230, 126, 34, 0.3);
+}
+
+.loading-spinner {
+  display: none;
+  border: 2px solid #fff;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 0.8s linear infinite;
+  margin-left: 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsivo */
+@media (max-width: 480px) {
+  .envio-label {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .envio-icon {
+    font-size: 2rem;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const radiosEnvio = document.querySelectorAll('.envio-radio');
+  const btnAvancar = document.getElementById('btn-avancar-envio');
+
+  // Validação de seleção
+  function validarEnvio() {
+    const selecionado = [...radiosEnvio].some(radio => radio.checked);
+    btnAvancar.disabled = !selecionado;
+    
+    // Feedback visual
+    radiosEnvio.forEach(radio => {
+      const card = radio.closest('.envio-card');
+      if(radio.checked) {
+        card.style.borderColor = '#e67e22';
+        card.style.background = '#fffaf5';
+      } else {
+        card.style.borderColor = '#eee';
+        card.style.background = 'white';
+      }
+    });
+  }
+
+  // Event listeners
+  radiosEnvio.forEach(radio => {
+    radio.addEventListener('change', validarEnvio);
+  });
+
+  // Processamento do envio
+  window.processarEnvio = function() {
+    if(!btnAvancar.disabled) {
+      btnAvancar.disabled = true;
+      btnAvancar.innerHTML = 'Processando... <div class="loading-spinner"></div>';
+      
+      // Simulação de envio
+      setTimeout(() => {
+        irParaEtapa('pagamento');
+        btnAvancar.disabled = false;
+        btnAvancar.innerHTML = '👉 Avançar para Pagamento';
+      }, 1500);
+    }
+  };
+});
+</script>
+</style>
+
+
+   <!-- Etapa 5: Pagamento (corrigida) -->
+<section id="etapa-pagamento" style="display:none">
+  <h2>💳 Confirme seu pagamento via PIX</h2>
+  <p>Para concluir sua solicitação, basta realizar o pagamento via PIX. Os dados para pagamento serão enviados a seguir.</p>
+  
+  <div class="form-group">
+    <label for="pix"><strong>Chave PIX:</strong></label>
+    <input type="text" id="pix" value="exemplo@cacaushow.com.br" disabled>
+  </div>
+  
+  <div class="form-group">
+    <label><strong>Valor do envio:</strong></label>
+    <span id="valor-envio">R$ 0,00</span>
+  </div>
+  
+  <p>Após o pagamento, aguarde o recebimento do seu chocolate!</p>
+  
+  <button class="button" onclick="finalizar()">👉 Concluir</button>
+</section>
+
+<script>
+// Controle da Etapa 4
+document.addEventListener('DOMContentLoaded', () => {
+  const radiosEnvio = document.querySelectorAll('.envio-radio');
+  const btnAvancar = document.getElementById('btn-avancar-envio');
+  let valorFrete = 18.00; // Valor inicial padrão (PAC)
+  let valorFrete = 29.99; // Valor inicial padrão (SEDEX)
+
+  function atualizarValorPagamento() {
+    const valorFormatado = valorFrete.toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+    });
+    document.getElementById('valor-envio').value = valorFormatado;
+  }
+
+  function validarEnvio() {
+    const selecionado = [...radiosEnvio].some(radio => radio.checked);
+    
+    if(selecionado) {
+      const radioSelecionado = document.querySelector('input[name="envio"]:checked');
+      valorFrete = parseFloat(radioSelecionado.value);
+      atualizarValorPagamento();
+    }
+    
+    btnAvancar.disabled = !selecionado;
+    
+ // Feedback visual
+    radiosEnvio.forEach(radio => {
+      const card = radio.closest('.envio-card');
+      if(radio.checked) {
+        card.style.borderColor = '#e67e22';
+        card.style.background = '#fffaf5';
+      } else {
+        card.style.borderColor = '#eee';
+        card.style.background = 'white';
+      }
+    });
+  }
+
+  radiosEnvio.forEach(radio => {
+    radio.addEventListener('change', validarEnvio);
+  });
+
+  window.processarEnvio = function() {
+    if(!btnAvancar.disabled) {
+      irParaEtapa('pagamento');
+    }
+  };
+});
+
+// Função de navegação entre etapas
+function irParaEtapa(etapa) {
+  document.querySelectorAll('main section').forEach(s => s.style.display = 'none');
+  const destino = document.getElementById(`etapa-${etapa}`);
+  if(destino) destino.style.display = 'block';
+}
+</script>
+
+  </main>
+  <footer>
+    <p>&copy; 2025 Cacau Show - Todos os direitos reservados.</p>
+  </footer>
+
+  <script>
+    // Função para avançar para a próxima etapa
+    function irParaEtapa(etapa) {
+      document.querySelectorAll('main section').forEach(s => s.style.display = 'none');
+      const destino = document.getElementById(`etapa-${etapa}`);
+      if (destino) {
+        destino.style.display = 'block';
+      } else {
+        console.error(`Elemento com id 'etapa-${etapa}' não encontrado.`);
+      }
+    }
+
+    // Função para selecionar o produto
+    function selecionarProduto(produto) {
+      const produtos = document.querySelectorAll('.product');
+      produtos.forEach(p => p.classList.remove('selected'));
+      produto.classList.add('selected');
+      // Exibir o campo de CEP
+      document.getElementById('campo-cep').style.display = 'block';
+    }
+
+    // Função para buscar o endereço através do CEP
+    function buscarCEP() {
+      const cep = document.getElementById('cep').value.replace('-', '').trim();
+      if (cep.length === 8) {
+        fetch(`https://viacep.com.br/ws/${cep}/json/`)
+          .then(response => response.json())
+          .then(data => {
+            if (data.logradouro) {
+              document.getElementById('rua').value = data.logradouro;
+              document.getElementById('bairro').value = data.bairro;
+              document.getElementById('cidade').value = data.localidade;
+              document.getElementById('estado').value = data.uf;
+              document.getElementById('endereco').style.display = 'block';
+              // Habilitar o botão de avançar
+              document.getElementById('btn-avancar').disabled = false;
+            } else {
+              alert('CEP não encontrado.');
+            }
+          })
+          .catch(() => alert('Erro ao buscar o CEP.'));
+      }
+    }
+
+    // Função para finalizar a compra
+    function finalizar() {
+      alert("Seu pagamento foi confirmado! Em breve, seu chocolate estará a caminho!");
+      window.location.reload();
+    }
+  </script>
+</body>
+</html>
